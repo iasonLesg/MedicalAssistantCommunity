@@ -1,0 +1,275 @@
+﻿<Window x:Class="MedicalAssistantCommunity.AddApointment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MedicalAssistantCommunity"
+        Title="Schedule Appointment" 
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent"
+        Width="900" Height="650">
+
+    <Window.Resources>
+        <!-- Shared TextBox Style from your template -->
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Background" Value="#FAFBFC"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="20" Background="White" CornerRadius="20">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" Direction="-90" RenderingBias="Quality" ShadowDepth="5" Opacity="0.1"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 1. Header Section -->
+            <StackPanel Grid.Row="0" Margin="30,30,30,20">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <!-- Calendar Icon -->
+                    <Path Data="M19,4H18V2H16V4H8V2H6V4H5C3.89,4 3,4.9 3,6V20C3,21.1 3.89,22 5,22H19C20.11,22 21,21.1 21,20V6C21,4.9 20.11,4 19,4M19,20H5V10H19V20M19,8H5V6H19V8Z" 
+                          Fill="{StaticResource SecondaryColor}" 
+                          Stretch="Uniform" Height="18" Width="18"/>
+                    <TextBlock Name="ModeLabel" Text="APPOINTMENT" FontSize="10" FontWeight="Black" 
+                               Foreground="{StaticResource SecondaryColor}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    
+                </StackPanel>
+                <TextBlock x:Name="WindowTitle" Text="Schedule New Visit" FontSize="26" FontWeight="Bold" Foreground="{StaticResource TextDark}"/>
+                <Rectangle Height="3" Width="40" Fill="{StaticResource BrandGradient}" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+                <Button Name="BTN_DeleteInterface" HorizontalAlignment="Right" VerticalAlignment="Top" 
+            Background="Transparent" BorderThickness="0" Cursor="Hand"
+            Click="Delete_Click">
+                    <!-- Ensure you have a Delete_Click event in .cs -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="DeleteApointmentBtn"  Text="Delete diagnosis" VerticalAlignment="Center" 
+                       Foreground="#E53E3E" FontSize="12" FontWeight="SemiBold" Margin="0,0,8,0"/>
+                        <Path Data="{StaticResource DeleteIconPath}" 
+                  Fill="#E53E3E" 
+                  Stretch="Uniform" 
+                  Height="18" Width="18"/>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Opacity" Value="0.7"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </StackPanel>
+
+            <!-- 2. Main Content -->
+            <Grid Grid.Row="1" Margin="30,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="380"/>
+                    <!-- Form Side -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Preview/Notes Side -->
+                </Grid.ColumnDefinitions>
+
+                <!-- LEFT SIDE: Appointment Details -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                   <StackPanel Margin="0,0,0,20">
+    <TextBlock Name="LBL_SelectPatient"  Text="Select Patient" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
+    
+    <Grid>
+        <!-- SEARCH MODE -->
+        <TextBox x:Name="TxtPatientSearch" 
+                 Height="40" 
+                 VerticalContentAlignment="Center"
+                 TextChanged="TxtPatientSearch_TextChanged"
+                 GotFocus="TxtPatientSearch_GotFocus"/>
+
+        <!-- SELECTED MODE (Greyed out) -->
+        <Border x:Name="SelectedPatientOverlay" 
+                Visibility="Collapsed" 
+                Background="#F1F5F9" 
+                BorderBrush="#E2E8F0" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Height="40">
+            <Grid Margin="10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="LblSelectedPatientName" 
+                           VerticalAlignment="Center" 
+                           Foreground="#94A3B8" 
+                           FontWeight="Medium"/>
+
+                <Button Grid.Column="1" Click="ClearSelection_Click" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" 
+                          Fill="#64748B" Stretch="Uniform" Height="12" Width="12"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- RESULTS POPUP -->
+        <Popup x:Name="PatientResultsPopup" 
+               IsOpen="False" 
+               PlacementTarget="{Binding ElementName=TxtPatientSearch}" 
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PopupAnimation="Slide">
+            <Border Background="White" BorderBrush="#E2E8F0" BorderThickness="1" Width="355" MaxHeight="200">
+                <ListBox x:Name="LstPatientResults" 
+                         BorderThickness="0" 
+                         DisplayMemberPath="Name" 
+                         SelectionChanged="LstPatientResults_SelectionChanged"/>
+            </Border>
+        </Popup>
+    </Grid>
+
+
+                        <TextBlock Name="LBL_AppointmentDate" Text="Appointment Date" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBox x:Name="AppDay" MaxLength="2" TextAlignment="Center"/>
+                                <TextBlock Name="LBL_Day" Text="Day" FontSize="9" Foreground="{StaticResource TextGrey}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <ComboBox x:Name="AppMonth" Style="{StaticResource ModernComboBox}" Height="38">
+                                    <!-- Use your Language logic here in code behind -->
+                                    <ComboBoxItem Content="January"/>
+                                    <ComboBoxItem Content="February"/>
+                                    <ComboBoxItem Content="March"/>
+                                    <ComboBoxItem Content="April"/>
+                                    <ComboBoxItem Content="May"/>
+                                    <ComboBoxItem Content="June"/>
+                                    <ComboBoxItem Content="July"/>
+                                    <ComboBoxItem Content="August"/>
+                                    <ComboBoxItem Content="September"/>
+                                    <ComboBoxItem Content="October"/>
+                                    <ComboBoxItem Content="November"/>
+                                    <ComboBoxItem Content="December"/>
+                                </ComboBox>
+                                <TextBlock Name="LBL_Month" Text="Month" FontSize="9" Foreground="{StaticResource TextGrey}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBox x:Name="AppYear" MaxLength="4" TextAlignment="Center"/>
+                                <TextBlock Name="LBL_Year" Text="Year" FontSize="9" Foreground="{StaticResource TextGrey}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Name="LBL_ApointmentTimeDur" Text="Appointment Time &amp; Duration" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <!-- Time Input (Left) -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Space Filler -->
+                                <ColumnDefinition Width="*"/>
+                                <!-- Duration Input (Right) -->
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Time Selection -->
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <TextBox x:Name="TxtHour" Width="50" TextAlignment="Center" MaxLength="2"/>
+                                <TextBlock Text=":" VerticalAlignment="Center" Margin="5,0" FontWeight="Bold"/>
+                                <TextBox x:Name="TxtMinute" Width="50" TextAlignment="Center" MaxLength="2"/>
+                            </StackPanel>
+
+                            <!-- Duration Selection (Pinned to the Right) -->
+                            <ComboBox x:Name="ComboDuration" Grid.Column="2" Width="130" Height="38" 
+              Style="{StaticResource ModernComboBox}" SelectedIndex="0">
+                                <ComboBoxItem Content="1 Hour" Tag="60"/>
+                                <ComboBoxItem Content="45 Minutes" Tag="45"/>
+                                <ComboBoxItem Content="30 Minutes" Tag="30"/>
+                                <ComboBoxItem Content="20 Minutes" Tag="20"/>
+                                <ComboBoxItem Content="15 Minutes" Tag="15"/>
+                                <ComboBoxItem Content="10 Minutes" Tag="10"/>
+                            </ComboBox>
+                        </Grid>
+
+                        <TextBlock Name="LBL_VisitReason" Text="Visit Reason" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
+                        <TextBox x:Name="TxtReason" Height="80" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- RIGHT SIDE: Status & Preview -->
+                <Border Grid.Column="1" Background="#FAFBFC" CornerRadius="15" Padding="25">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <Path Data="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10,10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8 S16.41,20,12,20z M12.5,7H11v6l5.2,3.2l0.8-1.3l-4.5-2.7V7z" 
+                                  Fill="{StaticResource SecondaryColor}" Stretch="Uniform" Height="20" Width="20"/>
+                            <TextBlock Name="LBL_AvailavilityCheck" Text="Availability Check" FontWeight="Bold" FontSize="18" Foreground="{StaticResource TextDark}" Margin="12,0,0,0"/>
+                        </StackPanel>
+
+                        <Border Background="White" CornerRadius="12" Padding="15" BorderBrush="#E2E8F0" BorderThickness="1">
+                            <StackPanel>
+                                <TextBlock Name="StatusText" Text="No conflicts detected for this time slot." Foreground="#28b5a5" FontWeight="Medium" Margin="0,0,0,5"/>
+                                <TextBlock Name="StatusText2" Text="The doctor is currently free at 10:30 AM." FontSize="12" Foreground="{StaticResource TextGrey}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Cogwheel / Config section you asked for -->
+                     
+
+                        <Border Grid.Column="1" Background="#FAFBFC" CornerRadius="15" Padding="20">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <Path Data="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" 
+                  Fill="{StaticResource SecondaryColor}" Stretch="Uniform" Height="18" Width="18"/>
+                                    <TextBlock Name="LBL_DailyTimeline" Text="Daily Timeline" FontWeight="Bold" FontSize="18" Foreground="{StaticResource TextDark}" Margin="12,0,0,0"/>
+                                </StackPanel>
+
+                                <!-- Dynamic area for the Appointment Cards -->
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel x:Name="TimelineContainer" Margin="0,5,5,5"/>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- 3. Footer -->
+            <Border Grid.Row="2" Background="#FAFBFC" CornerRadius="0,0,20,20" Padding="30,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="BtnCancel" Content="Discard"  Click="Cancel_Click" Grid.Column="0" Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextGrey}" FontWeight="SemiBold" Cursor="Hand"/>
+                    <Button x:Name="BtnSchedule" Click="Schedule_Apointment_Click" Content="Confirm Appointment" Grid.Column="1" Height="45" Background="{StaticResource BrandGradient}" Foreground="White" FontWeight="Bold" BorderThickness="0" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,406 @@
+﻿<Application x:Class="MedicalAssistantCommunity.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MedicalAssistantCommunity"
+             StartupUri="Login.xaml">
+    <Application.Resources>
+        <local:DateToLanguageConverter x:Key="LanguageDateConverter"/>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#00F4C2"/>
+
+        <SolidColorBrush x:Key="lOGOPrimaryColor" Color="#0ee3dc"/>
+        <SolidColorBrush x:Key="lOGOSecondaryColor" Color="#a4e6ed"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#07B6F7"/>
+        <SolidColorBrush x:Key="AppBackground" Color="#F5F7FB"/>
+        <SolidColorBrush x:Key="PressedGrey" Color="#E2E8F0"/>
+        <SolidColorBrush x:Key="TextDark" Color="#1E293B"/>
+        <SolidColorBrush x:Key="TextGrey" Color="#64748B"/>
+        <SolidColorBrush x:Key="LightRadioButtonBrush" Color="#F3F2F1"/>
+        <SolidColorBrush x:Key="DarkRadioButtonBrush" Color="#e1fcf7"/>
+        <SolidColorBrush x:Key="PrimaryAccentBrush" Color="#00F4C2"/>
+        <SolidColorBrush x:Key="CommunityBrush" Color="#8fe3d2"/>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <SolidColorBrush x:Key="PrimaryAquamarine" Color="#00F4C2"/>
+        
+        <Geometry x:Key="MedicalCross">
+            M16 3C16 2.44772 15.5523 2 15 2H9C8.44772 2 8 2.44772 8 3V8L3 8C2.44772 8 2 8.44771 2 9V15C2 15.5523 2.44772 16 3 16H8V21C8 21.5523 8.44772 22 9 22H15C15.5523 22 16 21.5523 16 21V16H21C21.5523 16 22 15.5523 22 15V9C22 8.44772 21.5523 8 21 8L16 8V3Z
+        </Geometry>
+        <CombinedGeometry x:Key="MedicalCrossTransparentCenter" GeometryCombineMode="Exclude">
+            <!-- The Outer Cross -->
+            <CombinedGeometry.Geometry1>
+                <PathGeometry Figures="M16 3C16 2.44772 15.5523 2 15 2H9C8.44772 2 8 2.44772 8 3V8L3 8C2.44772 8 2 8.44771 2 9V15C2 15.5523 2.44772 16 3 16H8V21C8 21.5523 8.44772 22 9 22H15C15.5523 22 16 21.5523 16 21V16H21C21.5523 16 22 15.5523 22 15V9C22 8.44772 21.5523 8 21 8L16 8V3Z" />
+            </CombinedGeometry.Geometry1>
+            <!-- The Hole (A 10x10 square in the middle) -->
+            <CombinedGeometry.Geometry2>
+                <RectangleGeometry Rect="7,7,10,10" />
+            </CombinedGeometry.Geometry2>
+        </CombinedGeometry>
+
+       
+        <Geometry x:Key="AbstractElement">
+            m 10.113808,5.326711 c 0,0 -1.4987711,-0.12857 -1.5918321,-0.0943 0,0 -0.595099,0.17999 -0.59265,0.60244 0.0037,0.42245 0.448161,0.50204 0.59265,0.52408 0.14449,0.022 0.50204,-0.022 1.256323,-0.33183 0.4481611,-0.17388 0.9930571,0.25224 0.4579571,0.69306 -0.6097941,0.57795 -1.9175441,0.77632 -1.9175441,0.77632 0,0 -1.624892,0.28163 -2.025299,0.49469 -0.400407,0.21306 -1.079996,0.55224 -1.248975,1.13755 -0.170204,0.5853 0.105306,1.00775 0.255917,1.15469 0.151836,0.14816 1.011425,0.75428 1.559995,0.93918 0.548569,0.18367 0.685712,0.37224 0.732242,0.43347 0.04653,0.0612 0.137142,0.31591 -0.118775,0.52775 -0.255917,0.21184 -0.462856,0.31959 -0.462856,0.31959 0,0 -0.243672,0.38939 0.233877,0.30367 0.47755,-0.0869 0.830201,-0.41142 0.993058,-0.8302 0.162856,-0.41877 -0.22653,-0.96 -0.5951,-1.17673 -0.36857,-0.21673 -1.357954,-0.74326 -1.357954,-0.74326 0,0 -1.057956,-0.63184 0.06122,-1.27469 0.498365,-0.32816 2.177135,-0.51306 2.382849,-0.57184 0.205713,-0.06 1.4693821,-0.31224 2.0583601,-0.96979 0.588977,-0.65755 0.585304,-1.0653 0.144489,-1.67142 -0.27306,-0.27184 -0.817956,-0.24245 -0.817956,-0.24245 z m -3.5803961,6.15549 -0.591426,-0.30122 c -0.624488,1.16081 0.624487,1.5306 0.634283,1.5404 -0.07225,-0.10408 0.09184,-0.44816 0.09429,-0.44816 -0.693059,-0.36 -0.137143,-0.79102 -0.137143,-0.79102 z m 1.144894,-2.70856 c 1.268567,0.81795 -0.248571,1.51101 -0.248571,1.51101 l 0.744488,0.43225 c 1.617545,-0.95878 0.495916,-2.10979 0.495916,-2.10979 l -0.991833,0.16653 z m -1.43877,-1.19877 c -2.120809,-0.2498 -2.46489,-0.86204 -2.523665,-0.90245 -0.05755,-0.0404 -0.195918,-0.23633 -0.09796,-0.48734 0.09796,-0.2498 0.495917,-0.18368 0.495917,-0.18368 0,0 0.929384,0.45306 1.499995,0.33918 0.929384,-0.40163 0.138366,-1.06285 0,-1.09469 -0.138367,-0.0318 -2.139176,0.0845 -2.139176,0.0845 -0.669794,0.16531 -1.049385,0.95143 -0.460407,1.69224 0.588977,0.74082 1.991013,1.1902 2.255502,1.18286 0.08082,-0.17878 0.969793,-0.63061 0.969793,-0.63061 z m 1.005302,4.17304 -0.453059,-0.17265 0,0.60734 0.417549,-0.24489 0.03551,-0.1898 z m -0.03551,-1.57836 0.03673,-1.34204 -0.498366,0.17266 0,0.93428 0.461631,0.2351 z m 5.7256941,-5.8861 c -0.13102,-0.0527 -1.240404,-0.86081 -1.691014,-1.3604 -0.934283,-0.76163 -1.7412191,-0.87061 -1.9506061,-0.86204 -0.209387,0.009 -0.771426,0 -0.988159,0.78857 -0.217959,0.78857 -0.617141,0.66244 -0.833875,0.57183 -0.02694,-0.011 -0.05388,-0.005 -0.08204,0.0147 l 0.0049,-0.35878 c 0.345305,-0.15551 0.586529,-0.50204 0.586529,-0.90489 0,-0.54735 -0.444488,-0.99184 -0.991833,-0.99184 -0.547345,0 -0.991833,0.44449 -0.991833,0.99184 0,0.40163 0.238774,0.74816 0.582855,0.90367 l 0.0086,0.34775 c -0.01959,-0.009 -0.03918,-0.01 -0.05878,-10e-4 -0.217959,0.0906 -0.617141,0.21795 -0.833875,-0.57184 -0.217958,-0.78857 -0.779997,-0.78 -0.98816,-0.78857 -0.208162,-0.009 -1.016323,0.0992 -1.950605,0.86204 -0.451835,0.49837 -1.561219,1.30653 -1.692239,1.35918 -0.1126525,0.0833 -0.090612,0.22163 0.161632,0.40898 0.511835,0.25714 1.033466,0.18367 1.033466,0.18367 0,0 0.08204,0.28041 0.653875,0.33061 0.571835,0.0514 1.049384,-0.24367 1.049384,-0.24367 0,0 0.104081,0.11755 0.362448,0.12735 0.471427,-0.0269 0.907344,-0.42613 0.907344,-0.42613 0,0 0.353876,0.11755 0.697956,0.0367 0.344081,-0.082 0.677141,-0.48122 0.677141,-0.48122 l 0.07837,3.24978 0.648977,-0.23388 0.04286,-3.01101 0.01469,-0.006 c 0,0 0.331835,0.39918 0.67714,0.48122 0.344081,0.082 0.697957,-0.0367 0.697957,-0.0367 0,0 0.435917,0.39918 0.907344,0.42612 0.259591,-0.009 0.3624471,-0.12735 0.3624471,-0.12735 0,0 0.47755,0.29511 1.049385,0.24368 0.571834,-0.0514 0.653875,-0.33061 0.653875,-0.33061 0,0 0.520406,0.0735 1.033465,-0.18368 0.25102,-0.18612 0.273061,-0.32449 0.160408,-0.40775 z M 6.8187169,2.403861 c -0.242448,0 -0.438366,-0.19591 -0.438366,-0.43836 0,-0.24245 0.195918,-0.43837 0.438366,-0.43837 0.242448,0 0.438366,0.19592 0.438366,0.43837 0,0.24245 -0.195918,0.43836 -0.438366,0.43836 z
+        </Geometry>
+
+
+        <DrawingImage x:Key="AppIconImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <!-- Background Cross -->
+                    <GeometryDrawing Geometry="{StaticResource MedicalCrossTransparentCenter}" 
+                      Brush="{StaticResource lOGOSecondaryColor}"/>
+
+                    <!-- Foreground Abstract Element -->
+                    <GeometryDrawing Brush="{StaticResource lOGOPrimaryColor}">
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <GeometryGroup.Transform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1.4" ScaleY="1.4" CenterX="7" CenterY="7"/>
+                                        <TranslateTransform X="-0.5" Y="1"/>
+                                    </TransformGroup>
+                                </GeometryGroup.Transform>
+                                <PathGeometry Figures="{Binding Source={StaticResource AbstractElement}, Path=Data}"/>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+
+        
+    
+
+        <Geometry x:Key="DeleteIconPath">
+            M176.415,880.5 c0,11.046,8.954,20,20,20 h507.67 c11.046,0,20-8.954,20-20 V232.487 h-547.67 V880.5 L176.415,880.5z
+    M562.75,342.766 h75 v436.029 h-75 V342.766z 
+    M412.75,342.766 h75 v436.029 h-75 V342.766z 
+    M262.75,342.766 h75 v436.029 h-75 V342.766z
+    M618.825,91.911 V20 c0-11.046-8.954-20-20-20 h-297.15 c-11.046,0-20,8.954-20,20 v71.911 v12.5 v12.5 H141.874
+    c-11.046,0-20,8.954-20,20 v50.576 c0,11.045,8.954,20,20,20 h34.541 h547.67 h34.541 c11.046,0,20-8.955,20-20 v-50.576
+    c0-11.046-8.954-20-20-20 H618.825 v-12.5 V91.911z 
+    M543.825,112.799 h-187.15 v-8.389 v-12.5 V75 h187.15 v16.911 v12.5 V112.799z
+        </Geometry>
+
+        <DrawingImage x:Key="DeleteIcon">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource DeleteIconPath}" Brush="#5fe3c8"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <Geometry x:Key="PrescriptionPath">
+            M30.71,26.18 H57.28 a1.34,1.34,0,0,0,1.33-1.26 V21.3 a1.33,1.33,0,0,0-1.3-1.3 H30.71 a1.32,1.32,0,0,0-1.33,1.3 V25 A1.33,1.33,0,0,0,30.71,26.18 Z 
+    M28.16,45.34 h11.1 a0.98,0.98,0,0,1,0.98,0.98 v1.06 a0.98,0.98,0,0,1-0.98,0.98 h-11.1 a0.98,0.98,0,0,1-0.98-0.98 v-1.06 a0.98,0.98,0,0,1,0.98-0.98 Z 
+    M28.16,52.83 h7.19 a0.98,0.98,0,0,1,0.98,0.98 v1.06 a0.98,0.98,0,0,1-0.98,0.98 h-7.19 a0.98,0.98,0,0,1-0.98-0.98 v-1.06 a0.98,0.98,0,0,1,0.98-0.98 Z 
+    M60.86,52.54 v-14 a9.05,9.05,0,0,0-9-9.14 H36.28 a9.06,9.06,0,0,0-9.15,9 v2.54 H43.74 A1.46,1.46,0,0,1,45.2,42.4 V59.09 a1.46,1.46,0,0,1-1.46,1.47 H27.13 v7.3 a1.41,1.41,0,0,0,1.47,1.3 H46.79 l14-16.55 Z 
+    M71.2,55.11 a6.32,6.32,0,0,0-8.89.73 l-4.78,5.64 l9.62,8.15 L71.93,64 A6.32,6.32,0,0,0,71.2,55.11 Z 
+    M50.66,69.62 a6.3,6.3,0,0,0,9.62,8.15 l4.78-5.63 L55.44,64 Z
+        </Geometry>
+        
+        <DrawingImage x:Key="IconPrescription">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PrescriptionPath}" Brush="#5fe3c8"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="IconInactivePrescription">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PrescriptionPath}" Brush="#c4c4c4"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <Geometry x:Key="History">
+            M192.039,231.176l75.96-74.279V32.776c0-6.012-4.848-10.925-10.925-10.925H32.75 c-6.012,0-10.925,4.848-10.925,10.925v327.111c0,6.012,4.848,10.925,10.925,10.925h224.388c6.012,0,10.925-4.848,10.925-10.925 V258.521l-25.212,24.63c-2.004,2.004-4.784,3.103-7.628,3.103c-0.065,0-0.065,0-0.129,0l-35.943-0.388 c-6.012-0.065-10.796-5.042-10.731-11.055l0.453-36.008C188.807,235.96,189.971,233.18,192.039,231.176z
+    M119.959,88.113h-12.994V74.537c0-6.012-4.848-10.925-10.925-10.925 c-6.012,0-10.925,4.848-10.925,10.925v13.576H72.185c-6.012,0-10.925,4.848-10.925,10.925c0,6.077,4.848,10.925,10.925,10.925 h12.994v13.705c0,6.012,4.848,10.925,10.925,10.925c6.012,0,10.925-4.848,10.925-10.925v-13.705h12.994 c6.012,0,10.925-4.848,10.925-10.925C130.948,92.962,125.971,88.113,119.959,88.113z
+    M206.714,188.251H71.021c-6.012,0-10.925-4.848-10.925-10.925S64.944,166.4,71.021,166.4h135.758 c6.012,0,10.925,4.848,10.925,10.925S212.791,188.251,206.714,188.251z
+    M155.643,253.608H71.021c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h84.622c6.012,0,10.925,4.848,10.925,10.925S161.656,253.608,155.643,253.608z
+    M218.868,319.03H71.021c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h147.911c6.012,0,10.925,4.848,10.925,10.925C229.793,314.182,224.88,319.03,218.868,319.03z
+    M218.868,122.764h-67.943c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h67.943c6.012,0,10.925,4.848,10.925,10.925C229.793,117.915,224.88,122.764,218.868,122.764z
+    M382.229,96.129c-14.545-15.903-37.818-14.222-51.394-0.646l-41.051,40.081V32.776 C289.785,14.675,275.175,0,257.074,0H32.75C14.714,0,0.039,14.675,0.039,32.776v327.111c0,18.036,14.675,32.711,32.711,32.711 h224.388c18.036,0,32.711-14.675,32.711-32.776v-122.57l91.798-89.729C395.999,133.495,396.193,110.416,382.229,96.129z
+    M230.763,264.404 l-20.558-0.259l0.259-20.558l114.489-111.838l20.299,20.816L230.763,264.404z
+    M366.391,131.879l-5.495,5.301l-20.299-20.816 l5.495-5.43c5.56-5.43,15.063-5.301,20.558,0.259C372.274,117.075,372.08,126.255,366.391,131.879z
+        </Geometry>
+        <DrawingImage x:Key="IconHistory">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource History}" Brush="#5fe3c8"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <!-- 1. The Raw Geometry (The Path) -->
+        <!-- Combined Geometry for C# (WPF/WinUI/MAUI) -->
+        <Geometry x:Key="Diagnosis">
+            M192.039,231.176l75.96-74.279V32.776c0-6.012-4.848-10.925-10.925-10.925H32.75 c-6.012,0-10.925,4.848-10.925,10.925v327.111c0,6.012,4.848,10.925,10.925,10.925h224.388c6.012,0,10.925-4.848,10.925-10.925 V258.521l-25.212,24.63c-2.004,2.004-4.784,3.103-7.628,3.103c-0.065,0-0.065,0-0.129,0l-35.943-0.388 c-6.012-0.065-10.796-5.042-10.731-11.055l0.453-36.008C188.807,235.96,189.971,233.18,192.039,231.176z
+    M119.959,88.113h-12.994V74.537c0-6.012-4.848-10.925-10.925-10.925 c-6.012,0-10.925,4.848-10.925,10.925v13.576H72.185c-6.012,0-10.925,4.848-10.925,10.925c0,6.077,4.848,10.925,10.925,10.925 h12.994v13.705c0,6.012,4.848,10.925,10.925,10.925c6.012,0,10.925-4.848,10.925-10.925v-13.705h12.994 c6.012,0,10.925-4.848,10.925-10.925C130.948,92.962,125.971,88.113,119.959,88.113z
+    M206.714,188.251H71.021c-6.012,0-10.925-4.848-10.925-10.925S64.944,166.4,71.021,166.4h135.758 c6.012,0,10.925,4.848,10.925,10.925S212.791,188.251,206.714,188.251z
+    M155.643,253.608H71.021c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h84.622c6.012,0,10.925,4.848,10.925,10.925S161.656,253.608,155.643,253.608z
+    M218.868,319.03H71.021c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h147.911c6.012,0,10.925,4.848,10.925,10.925C229.793,314.182,224.88,319.03,218.868,319.03z
+    M218.868,122.764h-67.943c-6.012,0-10.925-4.848-10.925-10.925c0-6.012,4.848-10.925,10.925-10.925 h67.943c6.012,0,10.925,4.848,10.925,10.925C229.793,117.915,224.88,122.764,218.868,122.764z
+    M382.229,96.129c-14.545-15.903-37.818-14.222-51.394-0.646l-41.051,40.081V32.776 C289.785,14.675,275.175,0,257.074,0H32.75C14.714,0,0.039,14.675,0.039,32.776v327.111c0,18.036,14.675,32.711,32.711,32.711 h224.388c18.036,0,32.711-14.675,32.711-32.776v-122.57l91.798-89.729C395.999,133.495,396.193,110.416,382.229,96.129z
+    M230.763,264.404 l-20.558-0.259l0.259-20.558l114.489-111.838l20.299,20.816L230.763,264.404z
+    M366.391,131.879l-5.495,5.301l-20.299-20.816 l5.495-5.43c5.56-5.43,15.063-5.301,20.558,0.259C372.274,117.075,372.08,126.255,366.391,131.879z
+        </Geometry>
+
+        <!-- 2. The Usable Icon (Matches your palette) -->
+        <DrawingImage x:Key="IconDiagnosis">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource Diagnosis}" Brush="#5fe3c8"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="IconInactiveDiagnosis">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource Diagnosis}" Brush="#c4c4c4"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <Geometry x:Key="PersonShape">
+            M11.564,9.004 C10.717,10.159 7.905,10.454 7.905,10.454 C7.905,10.454 5.029,10.17 4.182,9.028 C0.122,9.028 0,14.933 0,14.933 L15.808,14.933 C15.808,14.934 16.127,9.004 11.564,9.004 Z 
+        M10.818,3.02 C10.818,4.689 9.515,7.877 7.91,7.877 C6.303,7.877 5,4.689 5,3.02 C5,1.353 6.303,0 7.91,0 C9.515,0.001 10.818,1.353 10.818,3.02 Z
+        </Geometry>
+
+        <!-- 1. Male Icon (Secondary Blue) -->
+        <DrawingImage x:Key="IconMale">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PersonShape}" Brush="#03d7fc"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- 2. Female Icon (Pink) -->
+        <DrawingImage x:Key="IconFemale">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PersonShape}" Brush="#db03fc"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- 3. Default Icon (Grey) -->
+        <DrawingImage x:Key="IconDefault">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PersonShape}" Brush="#c4c4c4"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <Geometry x:Key="PrsecriptionActive">
+            M443.893,0H68.107c-11.28,0-20.426,9.145-20.426,20.426v471.149c0,11.28,9.145,20.426,20.426,20.426h270.957
+			c5.417,0,10.612-2.151,14.442-5.983l104.829-104.829c3.83-3.83,5.983-9.025,5.983-14.444V20.426
+			C464.319,9.145,455.175,0,443.893,0z M244.31,384.196h-30.603V414.8c0,11.28-9.145,20.426-20.426,20.426
+			s-20.426-9.145-20.426-20.426v-30.604h-30.604c-11.28,0-20.426-9.145-20.426-20.426s9.145-20.426,20.426-20.426h30.604v-30.604
+			c0-11.28,9.145-20.426,20.426-20.426s20.426,9.145,20.426,20.426v30.604h30.603c11.28,0,20.425,9.145,20.425,20.426
+			S255.591,384.196,244.31,384.196z M247.83,249.153H142.253c-11.28,0-20.426-9.145-20.426-20.426s9.145-20.426,20.426-20.426
+			H247.83c11.28,0,20.426,9.145,20.426,20.426S259.11,249.153,247.83,249.153z M369.747,186.469H142.253
+			c-11.28,0-20.426-9.145-20.426-20.425s9.145-20.426,20.426-20.426h227.494c11.28,0,20.426,9.145,20.426,20.426
+			S381.027,186.469,369.747,186.469z M369.747,123.783H142.253c-11.28,0-20.426-9.145-20.426-20.426s9.145-20.426,20.426-20.426
+			h227.494c11.28,0,20.426,9.145,20.426,20.426S381.027,123.783,369.747,123.783z
+        </Geometry>
+
+        <DrawingImage x:Key="IconPrescriptionInActive">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PrescriptionPath}" Brush="#c4c4c4"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="IconPrescriptionActive">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="{StaticResource PrescriptionPath}" Brush="#5fe3c8"/>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        
+        
+        
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="Button">
+                <!-- The Border acts as the hit-box -->
+                <Border Background="{TemplateBinding Background}">
+                    <Path x:Name="IconPath"
+                          Data="{StaticResource PersonShape}"
+                          Fill="{TemplateBinding Foreground}"
+                          Stretch="Uniform"
+                          Width="25" Height="25"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        </Path.RenderTransform>
+                    </Path>
+                </Border>
+                
+                <ControlTemplate.Triggers>
+                    <!-- 1. ON HOVER -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="IconPath" Property="Fill" Value="#00D4AA"/> <!-- Your Custom Hover Color -->
+                    </Trigger>
+                    
+                    <!-- 2. ON CLICK (Pressed) -->
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="IconPath" Property="Fill" Value="{StaticResource PrimaryColor}"/>
+                        <!-- Subtle "shrink" effect when clicked -->
+                        <Setter TargetName="IconPath" Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+        <!-- 1. Color Palette -->
+       
+        <LinearGradientBrush x:Key="BrandGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#00F4C2" Offset="0.0" />
+            <GradientStop Color="#07B6F7" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <!-- 2. Menu Button Style (For Sidebar) -->
+        <Style x:Key="MenuButtonStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border" Background="White" BorderThickness="0,0,0,1" BorderBrush="#F0F0F0">
+                            <Grid>
+                                <Rectangle x:Name="indicator" HorizontalAlignment="Left" Width="4" 
+                                           Fill="{StaticResource SecondaryColor}" Visibility="Collapsed"/>
+                                <ContentPresenter Margin="20,15" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FAFBFC"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource PressedGrey}"/>
+                                <Setter TargetName="indicator" Property="Visibility" Value="Visible"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PressedGrey}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,0,5,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
+                            <!-- The Background Box -->
+                            <Border x:Name="BackgroundBorder" 
+                            Background="White" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="8"/>
+
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Selected Item Display -->
+                                <ContentPresenter x:Name="ContentSite" 
+                                          IsHitTestVisible="False" 
+                                          Content="{TemplateBinding SelectionBoxItem}" 
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                          ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                                          VerticalAlignment="Center" 
+                                          HorizontalAlignment="Left"
+                                          TextBlock.Foreground="{StaticResource TextDark}"/>
+
+                                <!-- Custom Arrow -->
+                                <Path x:Name="Arrow" 
+                              Grid.Column="1" 
+                              Data="M0,0 L4,4 L8,0" 
+                              Fill="{StaticResource TextGrey}" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center" 
+                              Margin="5,0,5,0"
+                              Stretch="Uniform" Width="8"/>
+                            </Grid>
+
+                            <!-- Hidden ToggleButton that handles the click logic -->
+                            <ToggleButton x:Name="ToggleButton" 
+                                  Background="Transparent" 
+                                  BorderThickness="0" 
+                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                            <!-- The Dropdown Popup -->
+                            <Popup x:Name="PART_Popup" 
+                           AllowsTransparency="True" 
+                           Placement="Bottom" 
+                           IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Border x:Name="DropDownBorder" 
+                                Background="White" 
+                                BorderBrush="{StaticResource PressedGrey}" 
+                                BorderThickness="1" 
+                                CornerRadius="8" 
+                                Margin="0,2,0,0"
+                                MinWidth="{Binding ActualWidth, ElementName=MainGrid}">
+                                    <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" SnapsToDevicePixels="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Highlight border on MouseOver -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                            </Trigger>
+                            <!-- Ensure the Arrow doesn't block clicks -->
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Setter TargetName="Arrow" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="180" CenterX="4" CenterY="2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ThemeRadioTemplate" TargetType="RadioButton">
+            <!-- 'Frame' becomes 'Border' in WPF -->
+            <Border x:Name="OuterBorder"
+                Background="{StaticResource LightRadioButtonBrush}"
+                BorderBrush="{StaticResource LightRadioButtonBrush}"
+                BorderThickness="1"
+                Height="80" Width="80"
+                CornerRadius="5"
+                HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                <Grid Margin="4">
+                    <!-- The Check Indicator (Top Right) -->
+                    <Grid Height="20" Width="20" 
+                      HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Ellipse Fill="White" Stroke="#2E2545" StrokeThickness="1"/>
+                        <Ellipse x:Name="CheckDot"
+                             Fill="{StaticResource PrimaryAccentBrush}"
+                             Width="10" Height="10"
+                             Opacity="0"/>
+                        <!-- Hidden by default -->
+                    </Grid>
+
+                    <!-- This is where your Icon and Text go -->
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{StaticResource PrimaryAccentBrush}" />
+                    <Setter TargetName="CheckDot" Property="Opacity" Value="1" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Application.Resources>
+    
+    
+</Application>
