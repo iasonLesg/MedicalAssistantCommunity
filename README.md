@@ -24,4 +24,3 @@ As an open-source project, feedback is essential. Please open an "Issue" if you 
 
 ## ⚖️ License
 Distributed under the MIT License. See LICENSE for more information.
-Enjoy investigating! 🕵️‍♂️
