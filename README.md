@@ -21,3 +21,9 @@ This is the **Community Edition**. My goal is to build a high-performance, acces
 
 ## 🤝 Contribute & Feedback
 As an open-source project, feedback is essential. Please open an "Issue" if you have feature requests or find any bugs!
+
+## ⚖️ License
+
+Distributed under the MIT License. See LICENSE for more information.
+
+Enjoy investigating! 🕵️‍♂️
